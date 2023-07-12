@@ -1,15 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:meal_app/data/dammy_data.dart';
+import 'package:meal_app/models/category.dart';
 import 'package:meal_app/presentation/widgets/category_grid_item.dart';
 
+import 'meals_screen.dart';
+
 class CategoryScreen extends StatelessWidget {
-  const CategoryScreen({super.key});
+
+  const CategoryScreen({super.key, });
+
+   void navigateToMealList(BuildContext context, Category category) {
+
+    //1. match Meal list with concret category filter by category
+    
+    //Meal and Category have same parameter id ('c1' 'c2' etc..) if Meal category contains id like in Category
+    final listOfMeals = dummyMeals.where((meal) => meal.categories.contains(category.id)).toList();
+
+    //2.navigate to MealsScreen
+    Navigator.of(context).push(MaterialPageRoute(
+    builder: (ctx) =>MealsScreen(
+        title:  category.title,
+        meals: listOfMeals,),
+    ));
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Pick your category')),
+      appBar: AppBar(title: const Text('Pick your category')),
       body: GridView(
+        padding: const EdgeInsets.all(24),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: 3 / 2,
@@ -19,7 +40,9 @@ class CategoryScreen extends StatelessWidget {
 
           //availableCategories.map((category) =>CategoryGridItem(category: category) ).toList() 
           for (final category in availableCategories)
-            CategoryGridItem(category: category)
+            CategoryGridItem(category: category,onSelectCategory:() { 
+              navigateToMealList(context,category);
+            },)
         ],
       ),
     );
