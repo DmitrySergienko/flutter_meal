@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meal_app/models/meal.dart';
+import 'package:meal_app/presentation/widgets/meal_item_treat.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MealsItem extends StatelessWidget {
@@ -7,6 +8,16 @@ class MealsItem extends StatelessWidget {
 
   final Meal meal;
   final String title;
+
+  //to get enom 
+  // make first letter upper case 
+  String get complexityText {
+    return meal.complexity.name[0].toUpperCase() + meal.complexity.name.substring(1);
+  }
+
+    String get affordabilityText {
+    return meal.affordability.name[0].toUpperCase() + meal.affordability.name.substring(1);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +70,20 @@ class MealsItem extends StatelessWidget {
                     //3 object
                     const SizedBox(height: 12),
 
+                    //4 object
                     Row(
-                      children: [],
+                      mainAxisAlignment: MainAxisAlignment.center, //set in center 
+                      children: [
+                         MealItemTreat(icon: Icons.schedule, title: '${meal.duration} min'), 
+
+                         const SizedBox(width:12),
+
+                         MealItemTreat(icon: Icons.work, title: complexityText), 
+                         
+                         const SizedBox(width:12),
+
+                         MealItemTreat(icon: Icons.attach_money, title: affordabilityText), 
+                      ],
                     ),
                   ],
                 ),
