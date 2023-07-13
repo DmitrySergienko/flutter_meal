@@ -11,6 +11,10 @@ class MealsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: const EdgeInsets.all(8), 
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      clipBehavior: Clip.hardEdge,
+      elevation: 2,
       child:
 
           //use InkWell to ha have a clicable option
@@ -19,10 +23,16 @@ class MealsItem extends StatelessWidget {
         child: Stack(
           //Stack widget set all widgets top on each other starting with back->front
           children: [
+
+            //1 object image
             FadeInImage(
                 placeholder: MemoryImage(kTransparentImage),
-                image: NetworkImage(meal.imageUrl)), // get image from internet
-
+                image: NetworkImage(meal.imageUrl),
+                fit: BoxFit.cover,
+                height: 200,
+                width: double.infinity,
+                ), // get image from internet
+                
             Positioned( 
               bottom: 0, //set positioned object to top of the screen
               right: 0,
@@ -33,7 +43,8 @@ class MealsItem extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 6, horizontal: 44),
                 child: Column(
                   children: [
-                    //1 object
+
+                    //2 object text
                     Text(
                       meal.title,
                       maxLines: 2,
@@ -45,7 +56,7 @@ class MealsItem extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
-                    //2 object
+                    //3 object
                     const SizedBox(height: 12),
 
                     Row(
