@@ -3,6 +3,8 @@ import 'package:meal_app/models/meal.dart';
 import 'package:meal_app/presentation/widgets/meal_item_treat.dart';
 import 'package:transparent_image/transparent_image.dart';
 
+import 'meal_item_details_screen.dart';
+
 class MealsItem extends StatelessWidget {
   const MealsItem({super.key, required this.meal, required this.title});
 
@@ -19,6 +21,18 @@ class MealsItem extends StatelessWidget {
     return meal.affordability.name[0].toUpperCase() + meal.affordability.name.substring(1);
   }
 
+
+   //Navigation
+   goToDetails (BuildContext context){
+
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (ctx) => MealItemDetailsScreen(
+        title: meal.title,
+        meal: meal,
+      )));
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -30,7 +44,7 @@ class MealsItem extends StatelessWidget {
 
           //use InkWell to ha have a clicable option
           InkWell(
-        onTap: () {},
+        onTap:() => goToDetails(context),
         child: Stack(
           //Stack widget set all widgets top on each other starting with back->front
           children: [

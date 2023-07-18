@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meal_app/models/meal.dart';
+import 'package:meal_app/presentation/widgets/meal_item_details_screen.dart';
 import 'package:meal_app/presentation/widgets/meals_item.dart';
 
 
@@ -27,16 +28,18 @@ class MealsScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Spacer(),
+            const Spacer(),
             Text('The category is empty',
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground)),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       );
     }
 
-    return Scaffold(appBar: AppBar(title: Text(title)), body: content);
+    return Scaffold(
+      appBar: AppBar(title: Text(title)), 
+      body: content);
   }
 }
