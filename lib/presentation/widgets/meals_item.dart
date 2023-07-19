@@ -6,10 +6,11 @@ import 'package:transparent_image/transparent_image.dart';
 import 'meal_item_details_screen.dart';
 
 class MealsItem extends StatelessWidget {
-  const MealsItem({super.key, required this.meal, required this.title});
+  const MealsItem({super.key, required this.meal, required this.title, required this.onToggleFavorit});
 
-  final Meal meal;
-  final String title;
+    final Meal meal;
+    final String title;
+    final void Function(Meal meal) onToggleFavorit;
 
   //to get enom 
   // make first letter upper case 
@@ -27,6 +28,7 @@ class MealsItem extends StatelessWidget {
 
     Navigator.of(context).push(MaterialPageRoute(
       builder: (ctx) => MealItemDetailsScreen(
+        onToggleFavorit: onToggleFavorit,
         title: meal.title,
         meal: meal,
       )));

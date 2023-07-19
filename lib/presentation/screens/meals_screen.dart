@@ -7,11 +7,12 @@ class MealsScreen extends StatelessWidget {
   const MealsScreen({
     super.key,
     this.title,
-    required this.meals,
+    required this.meals, required this.onToggleFavorit,
   });
 
   final String? title;
   final List<Meal> meals;
+  final void Function(Meal meal) onToggleFavorit;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class MealsScreen extends StatelessWidget {
     Widget content = ListView.builder(
       itemCount: meals.length,
       itemBuilder: (ctx, index) => 
-      MealsItem(meal: meals[index], title: title!),
+      MealsItem(meal: meals[index], title: title?? '',onToggleFavorit: onToggleFavorit,),
     );
 
     if (meals.isEmpty) {

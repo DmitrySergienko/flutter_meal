@@ -5,10 +5,13 @@ import 'package:transparent_image/transparent_image.dart';
 
 class MealItemDetailsScreen extends StatelessWidget {
   const MealItemDetailsScreen(
-      {super.key, required this.title, required this.meal});
+      {super.key, required this.title, required this.meal, required this.onToggleFavorit});
 
   final String title;
   final Meal meal;
+
+  //to manage favorite mark
+  final void Function(Meal meal) onToggleFavorit;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +92,15 @@ class MealItemDetailsScreen extends StatelessWidget {
     );
 
     return Scaffold(
-       appBar: AppBar(title: Text(title),),
+       appBar: AppBar(title: Text(title),
+       actions: [
+        IconButton(
+          onPressed: (){
+            onToggleFavorit(meal);
+            },
+           icon: const Icon(Icons.star)),
+       ],
+       ),
        body: content,
     );
   }

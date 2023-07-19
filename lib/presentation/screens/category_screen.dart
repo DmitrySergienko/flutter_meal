@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:meal_app/data/dammy_data.dart';
 import 'package:meal_app/models/category.dart';
+import 'package:meal_app/models/meal.dart';
 import 'package:meal_app/presentation/widgets/category_grid_item.dart';
 
 import 'meals_screen.dart';
 
 class CategoryScreen extends StatelessWidget {
-
-  const CategoryScreen({super.key, });
+  const CategoryScreen({super.key, required this.onToggleFavorit, });
+   
+   final void Function(Meal meal) onToggleFavorit;
 
    void navigateToMealList(BuildContext context, Category category) {
 
     //1. match Meal list with concret category filter by category
-    
     //Meal and Category have same parameter id ('c1' 'c2' etc..) if Meal category contains id like in Category
     final listOfMeals = dummyMeals.where((meal) => meal.categories.contains(category.id)).toList();
 
@@ -20,7 +21,9 @@ class CategoryScreen extends StatelessWidget {
     Navigator.of(context).push(MaterialPageRoute(
     builder: (ctx) =>MealsScreen(
         title:  category.title,
-        meals: listOfMeals,),
+        meals: listOfMeals,
+        onToggleFavorit: onToggleFavorit,
+        ),
     ));
   }
 
