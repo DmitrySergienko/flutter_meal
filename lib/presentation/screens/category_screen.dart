@@ -7,15 +7,17 @@ import 'package:meal_app/presentation/widgets/category_grid_item.dart';
 import 'meals_screen.dart';
 
 class CategoryScreen extends StatelessWidget {
-  const CategoryScreen({super.key, required this.onToggleFavorit, });
+  const CategoryScreen({super.key, required this.onToggleFavorit, required this.availableMeal,});
    
    final void Function(Meal meal) onToggleFavorit;
+
+   final List<Meal> availableMeal;
 
    void navigateToMealList(BuildContext context, Category category) {
 
     //1. match Meal list with concret category filter by category
     //Meal and Category have same parameter id ('c1' 'c2' etc..) if Meal category contains id like in Category
-    final listOfMeals = dummyMeals.where((meal) => meal.categories.contains(category.id)).toList();
+    final listOfMeals = availableMeal.where((meal) => meal.categories.contains(category.id)).toList();
 
     //2.navigate to MealsScreen
     Navigator.of(context).push(MaterialPageRoute(

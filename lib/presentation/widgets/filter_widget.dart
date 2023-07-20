@@ -28,10 +28,12 @@ class FilterWidget extends StatelessWidget {
       ),
       subtitle: Text(
         subtitle,
+        
         style: Theme.of(context)
             .textTheme
               .titleLarge!
             .copyWith(color: Theme.of(context).colorScheme.onBackground),
+            
       ),
       activeColor: Theme.of(context).colorScheme.secondary,
       contentPadding: EdgeInsets.only(left: 24, right: 22),
