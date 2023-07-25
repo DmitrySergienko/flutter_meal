@@ -44,9 +44,10 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
           builder: (ctx) => const FilterScreen(),
         ),
       );
+    }else if (identifier == 'Meals'){
+       Navigator.of(context).pop(); 
     }
 
-    Navigator.of(context).pop(); //close the drawer after selecting a screen
   }
 
   @override
