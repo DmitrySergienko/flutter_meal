@@ -9,30 +9,6 @@ class FilterScreen extends ConsumerWidget {
   const FilterScreen({super.key});
 
 
-  // void _setGluten(bool newValue){
-  //   setState(() {
-  //     _glutineFreeSet = newValue;
-  //   });
-  // }
-
-  // void _setLactose(bool newValue){
-  //   setState(() {
-  //     _lactoseFree = newValue; 
-  //   });
-  // }
-
-  // void _setVegeterian(bool newValue){
-  //   setState(() {
-  //     _VegeterianFree = newValue;  
-  //   });
-  // }
-
-  // void _setVegan(bool newValue){
-  //   setState(() {
-  //     _VeganFree= newValue;  
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 

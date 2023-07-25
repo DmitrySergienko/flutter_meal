@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meal_app/models/meal.dart';
 import 'package:meal_app/presentation/screens/category_screen.dart';
 import 'package:meal_app/presentation/screens/filter_screen.dart';
 import 'package:meal_app/presentation/screens/meals_screen.dart';
@@ -50,7 +49,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
       );
     } 
     
-    Navigator.of(context).pop(); // You can call pop() here, if you want to close the drawer after selecting a screen
+    Navigator.of(context).pop(); //close the drawer after selecting a screen
 }
 
 
