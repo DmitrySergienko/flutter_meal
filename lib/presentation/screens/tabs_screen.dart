@@ -6,6 +6,7 @@ import 'package:meal_app/presentation/screens/filter_screen.dart';
 import 'package:meal_app/presentation/screens/meals_screen.dart';
 import 'package:meal_app/presentation/widgets/main_drawer.dart';
 import 'package:meal_app/providers/favorit_meal_provider.dart';
+import 'package:meal_app/providers/filter_provider.dart';
 import 'package:meal_app/providers/meals_provider.dart';
 
 
@@ -26,13 +27,9 @@ class TabsScreen extends ConsumerStatefulWidget {
 }
 
 class _TabsScreenState extends ConsumerState<TabsScreen> {
+
   //for bottom navigation tab
   int _selectedTabIndex = 0;
-
-
-  //to keep filter result use map as a container
-  Map<Filter,bool> _selectedFilters = kInitialFilters;
-
 
   void _selectPage(int index) {
     setState(() {
@@ -46,18 +43,11 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     if (identifier == 'Filters') {
         //navigate to FilterScreen
         //result it will be map (collecton of key and values) where key is Filter and value bool
-        final result = await Navigator.of(context).push<Map<Filter, bool>>(
+        await Navigator.of(context).push<Map<Filter, bool>>(
         MaterialPageRoute(
-          builder: (ctx) =>  FilterScreen(currentFilters: _selectedFilters,)),
+          builder: (ctx) => const FilterScreen(),
+          ),
       );
-      print('result: $result');
-
-      //update the map (we use it us conteiner where we keep our filters bool)
-      //kInitialFilters - default values
-      setState(() {
-          _selectedFilters =result ?? kInitialFilters;
-      });
-    
     } 
     
     Navigator.of(context).pop(); // You can call pop() here, if you want to close the drawer after selecting a screen
@@ -69,18 +59,19 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
 
     //riverpod
     final meals = ref.watch(mealsProvider);
+    final activeFilters = ref.watch(filterProvider);
 
     final availableMeals = meals.where((element) {
-      if(_selectedFilters[Filter.gluten]! && !element.isGlutenFree){
+      if(activeFilters[Filter.gluten]! && !element.isGlutenFree){
           return false;
         }
-         if(_selectedFilters[Filter.lactose]! && !element.isLactoseFree){
+         if(activeFilters[Filter.lactose]! && !element.isLactoseFree){
           return false;
         }
-         if(_selectedFilters[Filter.vegetarian]! && !element.isVegetarian){
+         if(activeFilters[Filter.vegetarian]! && !element.isVegetarian){
           return false;
         }
-         if(_selectedFilters[Filter.vegan]! && !element.isVegan){
+         if(activeFilters[Filter.vegan]! && !element.isVegan){
           return false;
         }
         return true;
