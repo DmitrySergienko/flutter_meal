@@ -5,109 +5,86 @@ import 'package:meal_app/providers/filter_provider.dart';
 
 
 
-class FilterScreen extends ConsumerStatefulWidget {
+class FilterScreen extends ConsumerWidget {
   const FilterScreen({super.key});
 
 
-  @override
-  ConsumerState<FilterScreen> createState() {
-    return _FilterScreenState();
-  }
-}
+  // void _setGluten(bool newValue){
+  //   setState(() {
+  //     _glutineFreeSet = newValue;
+  //   });
+  // }
 
-class _FilterScreenState extends ConsumerState<FilterScreen> {
+  // void _setLactose(bool newValue){
+  //   setState(() {
+  //     _lactoseFree = newValue; 
+  //   });
+  // }
 
-  var _glutineFreeSet = false;
-  var _lactoseFree = false;
-  var _VegeterianFree = false;
-  var _VeganFree = false;
+  // void _setVegeterian(bool newValue){
+  //   setState(() {
+  //     _VegeterianFree = newValue;  
+  //   });
+  // }
 
-  @override
-  void initState() {
-    //reiverpod
-    final activeFilters = ref.read(filterProvider);
-
-    _glutineFreeSet = activeFilters[Filter.gluten]!;
-    _VegeterianFree = activeFilters[Filter.vegetarian]!;
-    _lactoseFree = activeFilters[Filter.lactose]!;
-    _VeganFree = activeFilters[Filter.vegan]!;
-    super.initState();
-  }
-
-  void _setGluten(bool newValue){
-    setState(() {
-      _glutineFreeSet = newValue;
-    });
-  }
-
-  void _setLactose(bool newValue){
-    setState(() {
-      _lactoseFree = newValue; 
-    });
-  }
-
-  void _setVegeterian(bool newValue){
-    setState(() {
-      _VegeterianFree = newValue;  
-    });
-  }
-
-  void _setVegan(bool newValue){
-    setState(() {
-      _VeganFree= newValue;  
-    });
-  }
+  // void _setVegan(bool newValue){
+  //   setState(() {
+  //     _VeganFree= newValue;  
+  //   });
+  // }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final activeFilter = ref.watch(filterProvider);
+
     return Scaffold(
       
       appBar: AppBar(
         title: const Text('Your filters'),
       ),
       
-      
-      // transfer args use WillPopScope
-      body: WillPopScope( 
-              //will return to tabs when filter will be set up
-        onWillPop: () async {
-          ref.read(filterProvider.notifier).setFilters({
-            Filter.vegan: _VeganFree,
-            Filter.lactose:_lactoseFree,
-            Filter.vegetarian:_VegeterianFree,
-            Filter.gluten: _glutineFreeSet,
-        });
-          return true;
-        },
-        child: Column(  // removed the const keyword
+      body: 
+        Column(  // removed the const keyword
           children: [
              FilterWidget(
               title: "Gluten free",
               subtitle: "Only include gluten free meals",
-              value: _glutineFreeSet,
-              onChanged: _setGluten,
+              value: activeFilter[Filter.gluten]!,
+              onChanged: (isChecked){
+                ref.read(filterProvider.notifier).setFilter(Filter.gluten, isChecked);
+               },
             ),
+
             FilterWidget(
               title: "Lactose free",
               subtitle: "Only include lactose free meals",
-              value: _lactoseFree,
-              onChanged: _setLactose,
+              value: activeFilter[Filter.lactose]!,
+              onChanged: (isChecked){
+                ref.read(filterProvider.notifier).setFilter(Filter.lactose, isChecked);
+               },
             ),
             FilterWidget(
-              title: "Vegeterian free",
-              subtitle: "Only include vegeterian free meals",
-              value: _VegeterianFree,
-              onChanged: _setVegeterian,
+              title: "Vegeterian",
+              subtitle: "Only include vegeterian meals",
+              value: activeFilter[Filter.vegetarian]!,
+              onChanged: (isChecked){
+                ref.read(filterProvider.notifier).setFilter(Filter.vegetarian, isChecked);
+               },
             ),
+
             FilterWidget(
-              title: "Vegan free",
-              subtitle: "Only include vegan free meals",
-              value: _VeganFree,
-              onChanged: _setVegan,
+              title: "Vegan",
+              subtitle: "Only include vegan meals",
+              value: activeFilter[Filter.vegan]!,
+              onChanged: (isChecked){
+                ref.read(filterProvider.notifier).setFilter(Filter.vegan, isChecked);
+               },
             ),
+         
           ],
         ),
-      ),
-    );
+      );
+
   }
 }
