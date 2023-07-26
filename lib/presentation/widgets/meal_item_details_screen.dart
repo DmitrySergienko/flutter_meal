@@ -29,12 +29,15 @@ class MealItemDetailsScreen extends ConsumerWidget {
         //it is scrolable Column
         children: [
           //1 object image (from internet)
-          FadeInImage(
-            placeholder: MemoryImage(kTransparentImage),
-            image: NetworkImage(meal.imageUrl),
-            fit: BoxFit.cover,
-            height: 200,
-            width: double.infinity,
+          Hero(
+            tag: meal.id,
+            child: FadeInImage(
+              placeholder: MemoryImage(kTransparentImage),
+              image: NetworkImage(meal.imageUrl),
+              fit: BoxFit.cover,
+              height: 200,
+              width: double.infinity,
+            ),
           ),
 
           const SizedBox(height: 14),
@@ -107,18 +110,28 @@ class MealItemDetailsScreen extends ConsumerWidget {
         title: Text(title),
         actions: [
           IconButton(
-              onPressed: () {
-                //riverpod
-                final magic = ref
-                    .read(favoritMealProvider.notifier)
-                    .toggleMealFavoritStatus(meal);
+            onPressed: () {
+              //riverpod
+              final magic = ref
+                  .read(favoritMealProvider.notifier)
+                  .toggleMealFavoritStatus(meal);
 
-                //show message
-                ScaffoldMessenger.of(context).clearSnackBars();
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(magic ? 'Meal removed' : 'Meal added')));
-              },
-              icon: Icon(isIconClicked ? Icons.star : Icons.star_border)),
+              //show message
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(magic ? 'Meal removed' : 'Meal added')));
+            },
+            icon: AnimatedSwitcher(
+              duration: Duration(milliseconds: 300),
+              child: Icon(isIconClicked ? Icons.star : Icons.star_border, key: ValueKey(isIconClicked)),
+              transitionBuilder: ((child, animation) {
+                return RotationTransition(
+                  turns: animation,
+                  child: child,
+                );
+              }),
+            ),
+          ),
         ],
       ),
       body: content,
