@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meal_app/models/meal.dart';
 import 'package:meal_app/providers/favorit_meal_provider.dart';
-import 'package:meal_app/providers/filter_provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MealItemDetailsScreen extends ConsumerWidget {
@@ -122,14 +121,14 @@ class MealItemDetailsScreen extends ConsumerWidget {
                   content: Text(magic ? 'Meal removed' : 'Meal added')));
             },
             icon: AnimatedSwitcher(
-              duration: Duration(milliseconds: 300),
-              child: Icon(isIconClicked ? Icons.star : Icons.star_border, key: ValueKey(isIconClicked)),
+              duration: const Duration(milliseconds: 1500),
               transitionBuilder: ((child, animation) {
                 return RotationTransition(
                   turns: animation,
                   child: child,
                 );
               }),
+              child: Icon(isIconClicked ? Icons.star : Icons.star_border, key: ValueKey(isIconClicked)),
             ),
           ),
         ],
